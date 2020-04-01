@@ -1,8 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap');
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden; 
+    background: rgb(255,46,0);
+background: linear-gradient(144deg, rgba(255,46,0,1) 0%, rgba(0,18,131,1) 100%);
+}
+
 .BleButtonsContainer{
     position: absolute;
     top: calc(50% - var(--Grid-Size) / 2 - 40px);
-    left: calc(50% + var(--Grid-Size) / 2 + 10px);;
+    left: calc(50% + var(--Grid-Size) / 2 + 20px);;
 }
 .BleButtons{
     display: block;
@@ -14,19 +23,20 @@
     border: 0px;
     font-family: 'Baloo Da 2', cursive;
     font-size: 22px;
+    box-shadow: 5px 5px 10px #000;
 }
 
 #connect{
     background: rgb(0,255,184);
-background: linear-gradient(130deg, rgba(0,255,184,1) 0%, rgba(211,255,0,1) 100%);
+    background: linear-gradient(130deg, rgba(0,255,184,1) 0%, rgba(211,255,0,1) 100%);
 }
 
 #disconnect{
     background: rgb(255,0,0);
-background: linear-gradient(130deg, rgba(255,0,0,1) 0%, rgba(255,239,0,1) 100%);
+    background: linear-gradient(130deg, rgba(255,0,0,1) 0%, rgba(255,239,0,1) 100%);
 }
 
 #update{
     background: rgb(0,9,255);
-background: linear-gradient(133deg, rgba(0,9,255,1) 0%, rgba(0,255,248,1) 100%);
+    background: linear-gradient(133deg, rgba(0,9,255,1) 0%, rgba(0,255,248,1) 100%);
 }

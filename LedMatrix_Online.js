@@ -21,9 +21,8 @@ var funqueue = [];
 function setup() {
     canvas=createCanvas(windowWidth, windowHeight);
     canvas.parent("Grid");
-    background('#ffffff');
     document.documentElement.style.setProperty('--Grid-Size', windowHeight*GridHeight+"px");
- MatrixColors=Create2DArray(GridSize,GridSize);
+    MatrixColors=Create2DArray(GridSize,GridSize);
     for(var y=0; y<GridSize; y++){
         for( var x=0; x<GridSize; x++){
             MatrixColors[x][y]=GridStandardColor;
@@ -52,6 +51,9 @@ function DrawGrid(){
             rect(SX+CellSize*x,SY+CellSize*y,CellSize,CellSize);
         }
     }
+    strokeWeight(15);
+    strokeJoin(ROUND);
+    rect(SX-7,SY-7, CellSize*GridSize+15, CellSize*GridSize+15);
 }
 
 function DrawTiles(){
