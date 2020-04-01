@@ -1,11 +1,11 @@
 :root {
-     --animation-offset: 1;
- }
+    --Grid-Size:100px;
+}
 
 .ToolMenuContainer{
     position: absolute;
-    top: 20px;
-    left: 30px
+    top: calc(50% - var(--Grid-Size) / 2 - 20px);
+    left: calc(50% - var(--Grid-Size) / 2 - 90px);
 }
 
 .ToolIcon{
@@ -13,45 +13,46 @@
     height: 20px;
     width: 20px;
     border-radius: 40px;
-    background-color: #212121;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background: rgb(89,0,255);
+    background: linear-gradient(180deg, rgba(89,0,255,1) 0%, rgba(33,33,33,1) 100%);
     color: #fff;
     font-size: 20px;
     transition: border-radius 0.5s;
 
 }
 
+.ToolClear{
+    margin-top: 20px;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border-radius: 40px;
+    padding: 20px;
+    font-size: 20px;
+    color: #fff;
+    background: rgb(255,46,0);
+    background: linear-gradient(144deg, rgba(255,46,0,1) 0%, rgba(131,0,0,1) 100%);
+}
+
 .SubMenu{
     padding: 20px;
     width: 20px;
-    height: 0;
+    height: 20px;
     background-color: #212121;
     color: #fff;
     font-size: 16px;
     border-top: 2px solid;
     border-color: #3b3b3b;
-        animation-fill-mode: forwards;
-    opacity: 0;
+    animation-fill-mode: forwards;
 }
 
 .SubMenu:last-child{
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-}
-
-.ToolMenuContainer:hover .ToolIcon{
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
-
-.ToolMenuContainer:hover .SubMenu{
-    display: block;
-    animation: tilepopup 0.5s ease calc(0.5s * var(--animation-offset));
-    animation-fill-mode: forwards;  
-}
-
-@keyframes tilepopup{
-  0%   {opacity: 0; height:0; display: none;}
-  100% {opacity: 1; height:20px;}
+    background: rgb(89,0,255);
+    background: linear-gradient(0deg, rgba(89,0,255,1) 0%, rgba(33,33,33,1) 100%);
 }
 
 .SubMenu:hover{

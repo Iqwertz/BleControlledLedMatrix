@@ -14,36 +14,27 @@ var MatrixColors;
 var SelectedColor='#ffffff';
 
 var canvas;
-var gui;
 var code="";
 var RgbaToRgbBackground=[0,0,0];
 var funqueue = [];
-
-var vars = {      // Variable for dat.gui (Controls) 
-    Color: '#00ff76',
-    MakePicture: function(){AddPicture()},
-    Clear: function(){ClearDisp()},
-    GenerateCode: function(){CreateCode()}
-}
 
 function setup() {
     canvas=createCanvas(windowWidth, windowHeight);
     canvas.parent("Grid");
     background('#ffffff');
-    MatrixColors=Create2DArray(GridSize,GridSize);
+    document.documentElement.style.setProperty('--Grid-Size', windowHeight*GridHeight+"px");
+ MatrixColors=Create2DArray(GridSize,GridSize);
     for(var y=0; y<GridSize; y++){
         for( var x=0; x<GridSize; x++){
             MatrixColors[x][y]=GridStandardColor;
         }
     }
-    createGUI();
     for(var i=1; i<=9; i++){
-        document.getElementById("ColorTab"+i).style.backgroundColor=ColorBar[i];
+    document.getElementById("ColorTab"+i).style.backgroundColor=ColorBar[i];
     }
 }
 
 function draw() {
-    updateVars();
     DrawTiles();
     DrawGrid();
     //  RunQueue();
@@ -216,6 +207,7 @@ function BleMatrixUpdate(){
             DrawPixel(x,y,TempColor,true);
         }
     }
+    console.log("Update");
 }
 
 function BleSetPixel(hexColor, X, Y){  //DataValueFormat for SetPixel= PR[r]G[g]B[b]X[x]Y[y];   //P starts Pixel reading //[x] x is a var and no Brackets
@@ -310,21 +302,6 @@ function ClearDisp(){
 function SetBrightness(B){   //B in Percent
     B=map(B,0,100,0,255);  //Convert Percent to byte 255
     send("B"+B.toString()+";")   //Send coded as B[Value];
-}
-
-function createGUI() { 
-    gui = new dat.GUI;  //defines gui 
-    //define Gui Structure
-
-    Colors = gui.addFolder('Color Settings');
-    Colors.addColor(vars, 'Color');
-    gui.add(vars, "MakePicture");
-    gui.add(vars, "Clear");
-    gui.add(vars, "GenerateCode");
-}
-
-function updateVars(){  //Updtes the Global vars with them from the Sketch
-    // SelectedColor=vars.Color;
 }
 
 
