@@ -11,7 +11,7 @@ var OccuredErrors=0;
 var MaxError=2;
 
 var MatrixColors;
-var SelectedColor='#000';
+var SelectedColor='#ffffff';
 
 var canvas;
 var gui;
@@ -38,7 +38,7 @@ function setup() {
     }
     createGUI();
     for(var i=1; i<=9; i++){
-        document.getElementById("ColorTab"+i).style.backgroundColor=ColorBar[i-1];
+        document.getElementById("ColorTab"+i).style.backgroundColor=ColorBar[i];
     }
 }
 
@@ -86,60 +86,66 @@ function Create2DArray(rows,columns) {
 
 function mousePressed(){
     if(mouseX>=width/2-(GridHeight*height)/2 && mouseX<=width/2+(GridHeight*height)/2 && mouseY>=height/2-(GridHeight*height)/2 && mouseY<=height/2+(GridHeight*height)/2){
-        var TileNumber=GetTileNumber(mouseX, mouseY);
-        switch(SelectedTool){
-            case 0:
-                DrawPixel(TileNumber[0],TileNumber[1],SelectedColor, true);
-                break;
-            case 1:
-                FillTool(TileNumber[0],TileNumber[1]);
-                break;
-            case 2:
-                CircleStart[0]=TileNumber[0];
-                CircleStart[1]=TileNumber[1];
-                SetBuffer();
-                break;
-            case 3:
-                LineStart[0]=TileNumber[0];
-                LineStart[1]=TileNumber[1];
-                SetBuffer();
-                break;
+        if(!ColorPickerActive){
+            var TileNumber=GetTileNumber(mouseX, mouseY);
+            switch(SelectedTool){
+                case 0:
+                    DrawPixel(TileNumber[0],TileNumber[1],SelectedColor, true);
+                    break;
+                case 1:
+                    FillTool(TileNumber[0],TileNumber[1]);
+                    break;
+                case 2:
+                    CircleStart[0]=TileNumber[0];
+                    CircleStart[1]=TileNumber[1];
+                    SetBuffer();
+                    break;
+                case 3:
+                    LineStart[0]=TileNumber[0];
+                    LineStart[1]=TileNumber[1];
+                    SetBuffer();
+                    break;
+            }
         }
     }
 }
 
 function mouseDragged(){
     if(mouseX>=width/2-(GridHeight*height)/2 && mouseX<=width/2+(GridHeight*height)/2 && mouseY>=height/2-(GridHeight*height)/2 && mouseY<=height/2+(GridHeight*height)/2){
-        var TileNumber=GetTileNumber(mouseX, mouseY);
-        switch(SelectedTool){
-            case 0:
-                DrawPixel(TileNumber[0],TileNumber[1],SelectedColor, true);
-                break;
-            case 2:
-                CircleToolDrag(TileNumber[0],TileNumber[1]);
-                break;
-            case 3:
-                LineToolDrag(TileNumber[0],TileNumber[1]);
-                break;
+        if(!ColorPickerActive){
+            var TileNumber=GetTileNumber(mouseX, mouseY);
+            switch(SelectedTool){
+                case 0:
+                    DrawPixel(TileNumber[0],TileNumber[1],SelectedColor, true);
+                    break;
+                case 2:
+                    CircleToolDrag(TileNumber[0],TileNumber[1]);
+                    break;
+                case 3:
+                    LineToolDrag(TileNumber[0],TileNumber[1]);
+                    break;
+            }
         }
     }
 }
 
 function mouseReleased(){
     if(mouseX>=width/2-(GridHeight*height)/2 && mouseX<=width/2+(GridHeight*height)/2 && mouseY>=height/2-(GridHeight*height)/2 && mouseY<=height/2+(GridHeight*height)/2){
-        switch(SelectedTool){
-            case 2:
-                SetMatrixFromBuffer(MatrixBuffer);
-                BleSetCircle();
-                CircleStart=[-1,-1];
-                CurrentCircleEnd=[-1,-1];
-                break;
-            case 3:
-                SetMatrixFromBuffer(MatrixBuffer);
-                BleSetLine();
-                LineStart=[-1,-1];
-                CurrentLineEnd=[-1,-1];
-                break;
+        if(!ColorPickerActive){
+            switch(SelectedTool){
+                case 2:
+                    SetMatrixFromBuffer(MatrixBuffer);
+                    BleSetCircle();
+                    CircleStart=[-1,-1];
+                    CurrentCircleEnd=[-1,-1];
+                    break;
+                case 3:
+                    SetMatrixFromBuffer(MatrixBuffer);
+                    BleSetLine();
+                    LineStart=[-1,-1];
+                    CurrentLineEnd=[-1,-1];
+                    break;
+            }
         }
     }
 }
@@ -318,7 +324,7 @@ function createGUI() {
 }
 
 function updateVars(){  //Updtes the Global vars with them from the Sketch
-   // SelectedColor=vars.Color;
+    // SelectedColor=vars.Color;
 }
 
 
@@ -560,12 +566,53 @@ function SetMatrixFromBuffer(Buffer){
 
 
 //////////////////Color Bar/////////////////////////
-var ColorBar= ['#4dffa0','#4d98ff','#7d4dff','#ff4dea','#ff4d62','#ff984d','#fff84d','#000000','#ffffff'];
+var ColorPickerActive=false;
+var Opened=false;
+var colorPicker = new window.iro.ColorPicker('#picker', {
+    width: 100,
+    color: "#ffffff"
+});
+var ColorBar= ['#000000','#4dffa0','#4d98ff','#7d4dff','#ff4dea','#ff4d62','#ff984d','#fff84d','#000000','#ffffff'];
+
+function onColorChange(color, changes) {
+    document.getElementById("CPC").style.color=color.hexString;
+    document.getElementById("ColorTab0").style.color=color.hexString;
+    ColorBar[0]=color.hexString;
+    SelectedColor=ColorBar[0];
+}
+
+function OpenColorPicker(){
+    for(var i=1; i<=9; i++){
+        document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+    }
+    colorPicker.on('color:change', onColorChange);
+    document.getElementById("CPC").style.display="block";
+    ColorPickerActive=true; 
+    Opened=true;
+}
 
 function SelectColor(c){
+    for(var i=1; i<=9; i++){
+        document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+    }
     console.log(c);
-    SelectedColor=ColorBar[c-1];
+    SelectedColor=ColorBar[c];
+    document.getElementById("ColorTab"+c).style["boxShadow"] = "0 0 10px #fff";
 }
+
+document.addEventListener('click', function(e) {
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    if(target.parentElement.parentElement.className!="ColorPicker" && target.parentElement.parentElement.className!="ColorBar" && !Opened){
+        document.getElementById("CPC").style.display="none";
+        ColorPickerActive=false;
+        colorPicker.off('color:change', onColorChange);
+
+    }
+    if(Opened){
+        Opened=false;
+    }
+}, false);
 //////////////////Bluetooth//////////////////////////
 var charackteristicsCache = null;
 var serviceUuid = "0xFFE0";
