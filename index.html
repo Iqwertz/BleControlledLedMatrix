@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+        <script language="javascript" type="text/javascript" src="LedMatrix_Online.js"></script>
+        <script type="text/javascript" src="libraries/dat.gui.min.js"></script>
+        <script src="https://kit.fontawesome.com/096ef5e38d.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="toolmenu.css">
+        <link rel="stylesheet" href="ColorBar.css">
+        <style> body {padding: 0; margin: 0; overflow: hidden; } </style>
+    </head>
+
+    <body>
+        <div class="ToolMenuContainer">
+            <div class="ToolIcon">
+                <i class="fas fa-pencil-ruler"></i>
+            </div>
+            <div id="ToolMenu" class="ToolMenu">
+                <div onclick="onStartButtonClick();" style="--animation-offset:0.5" class="SubMenu"><i class="fas fa-pencil-alt"></i></div>
+                <div onclick="SetTool(0);" style="--animation-offset:0.5" class="SubMenu"><i class="fas fa-pencil-alt"></i></div>
+                <div onclick="SetTool(1);" style="--animation-offset:1.2" class="SubMenu"><i class="fas fa-fill-drip"></i></div>
+                <div onclick="SetTool(2);" style="--animation-offset:2" class="SubMenu"><i class="far fa-circle"></i></div>
+                <div onclick="SetTool(3);"  style="--animation-offset:2.5" class="SubMenu"><i class="fas fa-vector-square"></i></div>
+            </div>
+        </div>
+        
+        <div class="ColorBar">
+            <div  id="ColorTab0" class="ColorTap"></div>
+            <div onclick="SelectColor(1);" id="ColorTab1" class="ColorTap"></div>
+            <div onclick="SelectColor(2);" id="ColorTab2" class="ColorTap"></div>
+            <div onclick="SelectColor(3);" id="ColorTab3" class="ColorTap"></div>
+            <div onclick="SelectColor(4);" id="ColorTab4" class="ColorTap"></div>
+            <div onclick="SelectColor(5);" id="ColorTab5" class="ColorTap"></div>
+            <div onclick="SelectColor(6);" id="ColorTab6" class="ColorTap"></div>
+            <div onclick="SelectColor(7);" id="ColorTab7" class="ColorTap"></div>
+            <div onclick="SelectColor(8);" id="ColorTab8" class="ColorTap"></div>
+            <div onclick="SelectColor(9);" id="ColorTab9" class="ColorTap"></div>
+        </div>
+        <div id="Grid" style="margin-top: -30px;"></div>
+        <button id="connect"></button>
+        <button id="disconnect"></button>
+    </body>
+</html>

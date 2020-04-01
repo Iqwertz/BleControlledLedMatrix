@@ -1,0 +1,60 @@
+:root {
+     --animation-offset: 1;
+ }
+
+.ToolMenuContainer{
+    position: absolute;
+    top: 20px;
+    left: 30px
+}
+
+.ToolIcon{
+    padding: 20px;
+    height: 20px;
+    width: 20px;
+    border-radius: 40px;
+    background-color: #212121;
+    color: #fff;
+    font-size: 20px;
+    transition: border-radius 0.5s;
+
+}
+
+.SubMenu{
+    padding: 20px;
+    width: 20px;
+    height: 0;
+    background-color: #212121;
+    color: #fff;
+    font-size: 16px;
+    border-top: 2px solid;
+    border-color: #3b3b3b;
+        animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+.SubMenu:last-child{
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.ToolMenuContainer:hover .ToolIcon{
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.ToolMenuContainer:hover .SubMenu{
+    display: block;
+    animation: tilepopup 0.5s ease calc(0.5s * var(--animation-offset));
+    animation-fill-mode: forwards;  
+}
+
+@keyframes tilepopup{
+  0%   {opacity: 0; height:0; display: none;}
+  100% {opacity: 1; height:20px;}
+}
+
+.SubMenu:hover{
+    color: #ff8989 !important;
+}
+

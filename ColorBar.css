@@ -1,0 +1,24 @@
+.ColorBar{
+    position: absolute;
+    bottom: 15px;
+    left: calc(50% - 250px);
+    height: 50px;
+    width: 500px;
+    background-color: #212121;
+    border-radius: 20px;
+    display: flex;
+}
+
+.ColorTap{
+    position: relative;
+    margin: 5px;
+    height: 40px;
+    width: 40px;
+    background-color: #d3d3d3;
+    border-radius: 24px;
+}
+
+#ColorTab0{
+background: rgb(9,255,0);
+background: linear-gradient(135deg, rgba(9,255,0,1) 0%, rgba(0,219,255,1) 25%, rgba(222,0,255,1) 50%, rgba(255,0,69,1) 75%, rgba(255,218,0,1) 100%);
+}
