@@ -46,6 +46,8 @@
             <button onclick="onStartButtonClick();" class="BleButtons" id="connect">Connect</button>
             <button onclick="BleMatrixUpdate();" class="BleButtons" id="update">Update</button>
             <button onclick="onStopButtonClick();" class="BleButtons" id="disconnect">Disconnect</button>
+            
+            <input type="range" min="0" max="100" value="30" id="Brightness" onchange="SetBrightness(this.value)" class="BrightnessSlider BleButtons"/>
         </div>
     </body>
 </html>

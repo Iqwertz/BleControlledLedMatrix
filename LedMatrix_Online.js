@@ -592,6 +592,7 @@ document.addEventListener('click', function(e) {
         Opened=false;
     }
 }, false);
+
 //////////////////Bluetooth//////////////////////////
 var charackteristicsCache = null;
 var serviceUuid = "0xFFE0";
