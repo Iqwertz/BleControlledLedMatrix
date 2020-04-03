@@ -52,7 +52,6 @@
     border-radius: 10px;
 }
 
-
 .ColorPicker{
     z-index: 3;
     position: relative;
@@ -60,3 +59,44 @@
     top: 10px;
 }
 
+.MobileColorBar{
+    display: none;
+}
+
+@media screen and (max-width:736px) {
+    .ColorBar{
+        display: none;
+    }
+    .MobileColorBar{
+        position: relative;
+        margin: 3px;
+        margin-bottom: 7px;
+        top: calc(var(--Grid-Size) + 70px);
+        left: 5px;
+        height: 50px;
+        width: calc(100% - 20px);
+        background-color: #212121;
+        border-radius: 20px;
+        display: flex;
+        box-shadow: 5px 5px 10px #000;
+    }
+    
+    .MobileColorPickerContainer{
+    display: none;
+    z-index: 2;
+    position: absolute;
+    bottom: 70px;
+    left: 2px;
+    width: 120px;
+    height: 170px;
+    background-color: #212121; 
+    border-radius: 15px;
+    border: 2px solid;
+    box-shadow: 0px 0px 10px;
+}
+    
+    .MobileColorPickerContainer > .pointer{
+        left: 5px;
+        width: 35px;
+    }
+}

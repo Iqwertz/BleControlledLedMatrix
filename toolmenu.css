@@ -8,6 +8,7 @@
     left: calc(50% - var(--Grid-Size) / 2 - 90px);
 }
 
+
 .ToolIcon{
     padding: 20px;
     height: 20px;
@@ -20,7 +21,7 @@
     color: #fff;
     font-size: 20px;
     transition: border-radius 0.5s;
-box-shadow: 5px 5px 10px #000;
+    box-shadow: 5px 5px 10px #000;
 }
 
 .ToolClear{
@@ -61,3 +62,37 @@ box-shadow: 5px 5px 10px #000;
     color: #ff8989 !important;
 }
 
+@media screen and (max-width:736px) {
+    .ToolMenuContainer{
+        top: 420px;
+        left: 140px;
+        transform: rotate(-90deg);
+    }
+    .SubMenu:first-child{
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+    }
+
+    .SubMenu{
+        background: rgb(89,0,255);
+        background: linear-gradient(90deg, rgba(89,0,255,1) 0%, rgba(33,33,33,1) 100%) !important;
+        box-shadow: -5px 5px 10px #000;
+        border: 0px;
+    }
+
+    .SubMenu > i {
+        transform: rotate(90deg);
+    }
+
+    .ToolClear > i{
+        transform: rotate(270deg) scale(1,-1);
+    }
+    
+    .ToolClear {
+        top: 30px;
+    }
+    .ToolIcon{
+        display: none;
+
+    }
+}

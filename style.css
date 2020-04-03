@@ -5,13 +5,20 @@ body {
     margin: 0;
     overflow: hidden; 
     background: rgb(255,46,0);
-background: linear-gradient(144deg, rgba(255,46,0,1) 0%, rgba(0,18,131,1) 100%);
+    background: linear-gradient(144deg, rgba(255,46,0,1) 0%, rgba(0,18,131,1) 100%);
+}
+
+.Canvas{
+    position: absolute;
+    left: calc(50% - var(--Grid-Size)/2);
+    top: 15px;
+    border-radius: 30px;
 }
 
 .BleButtonsContainer{
     position: absolute;
     top: calc(50% - var(--Grid-Size) / 2 - 40px);
-    left: calc(50% + var(--Grid-Size) / 2 + 20px);;
+    left: calc(50% + var(--Grid-Size) / 2 + 20px);
 }
 .BleButtons{
     display: block;
@@ -42,92 +49,147 @@ background: linear-gradient(144deg, rgba(255,46,0,1) 0%, rgba(0,18,131,1) 100%);
 }
 
 input[type=range].BrightnessSlider {
-  -webkit-appearance: none;
-  width: 200px;
-  margin-top: 40px
+    -webkit-appearance: none;
+    width: 200px;
+    margin-top: 40px
 }
 input[type=range].BrightnessSlider:focus {
-  outline: none;
+    outline: none;
 }
 input[type=range].BrightnessSlider::-webkit-slider-runnable-track {
-  width: 200px;
-  height: 50px;
-  cursor: pointer;
-  box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
-  background: rgb(255,255,255);
-background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
-  border-radius: 20px;
-  border: 0px solid #050101;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
+    background: rgb(255,255,255);
+    background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    border-radius: 20px;
+    border: 0px solid #050101;
 }
 input[type=range].BrightnessSlider::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  border: 0px solid rgba(119, 30, 0, 0);
-  height: 50px;
-  width: 13px;
-  border-radius: 50px;
-background: rgb(255,255,255);
-background: linear-gradient(122deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: 0px;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid rgba(119, 30, 0, 0);
+    height: 50px;
+    width: 13px;
+    border-radius: 50px;
+    background: rgb(255,255,255);
+    background: linear-gradient(122deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: 0px;
 }
 input[type=range].BrightnessSlider:focus::-webkit-slider-runnable-track {
-  background: rgb(255,255,255);
-background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    background: rgb(255,255,255);
+    background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
 }
 input[type=range].BrightnessSlider::-moz-range-track {
-  width: 200px;
-  height: 50px;
-  cursor: pointer;
-  box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
-  background: rgb(255,255,255);
-background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
-  border-radius: 14.9px;
-  border: 0px solid #050101;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
+    background: rgb(255,255,255);
+    background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    border-radius: 14.9px;
+    border: 0px solid #050101;
 }
 input[type=range].BrightnessSlider::-moz-range-thumb {
-  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  border: 0px solid rgba(119, 30, 0, 0);
-  height: 50px;
-  width: 13px;
-  border-radius: 50px;
-  background: rgba(108, 255, 181, 0.93);
-  cursor: pointer;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid rgba(119, 30, 0, 0);
+    height: 50px;
+    width: 13px;
+    border-radius: 50px;
+    background: rgba(108, 255, 181, 0.93);
+    cursor: pointer;
 }
 input[type=range].BrightnessSlider::-ms-track {
-  width: 200px;
-  height: 50px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
 }
 input[type=range].BrightnessSlider::-ms-fill-lower {
-  background: #ff0000;
-  border: 0px solid #050101;
-  border-radius: 29.8px;
-  box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
+    background: #ff0000;
+    border: 0px solid #050101;
+    border-radius: 29.8px;
+    box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
 }
 input[type=range].BrightnessSlider::-ms-fill-upper {
-  background: #ff0000;
-  border: 0px solid #050101;
-  border-radius: 29.8px;
-  box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
+    background: #ff0000;
+    border: 0px solid #050101;
+    border-radius: 29.8px;
+    box-shadow: 2px 2px 5px #000000, 0px 0px 2px #0d0d0d;
 }
 input[type=range].BrightnessSlider::-ms-thumb {
-  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  border: 0px solid rgba(119, 30, 0, 0);
-  width: 13px;
-  border-radius: 50px;
-  background: rgba(108, 255, 181, 0.93);
-  cursor: pointer;
-  height: 50px;
+    box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    border: 0px solid rgba(119, 30, 0, 0);
+    width: 13px;
+    border-radius: 50px;
+    background: rgba(108, 255, 181, 0.93);
+    cursor: pointer;
+    height: 50px;
 }
 input[type=range].BrightnessSlider:focus::-ms-fill-lower {
-  background: rgb(255,255,255);
-background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    background: rgb(255,255,255);
+    background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
 }
 input[type=range].BrightnessSlider:focus::-ms-fill-upper {
-  background: rgb(255,255,255);
-background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+    background: rgb(255,255,255);
+    background: linear-gradient(215deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+}
+
+
+.MobileBleButtons{
+    display: none;
+}
+@media screen and (max-width:736px) {
+    .BleButtonsContainer{
+        display: none;
+    }
+    .MobileBleButtons{
+        display: block;
+        position: absolute;
+        top:0;
+        width: 100%;
+        height: 40px;
+        font-size: 1.7em;
+        color: #b7dbff;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        text-align: center;
+        padding-top: 10px;
+        background: rgb(119,254,255);
+        background: linear-gradient(155deg, rgba(119,254,255,1) 0%, rgba(7,2,117,1) 100%);
+    }
+
+    .MobileBleButtons > i {
+        margin-bottom: 12px;
+    }
+    .MobileBleButtons > .MobileButtons {
+        display: none;
+        position: relative;
+        width: 100%;
+        height: 60px;
+        border: 0px;
+        font-family: 'Baloo Da 2', cursive;
+        font-size: 22px;
+    }
+
+    input[type=range].BrightnessSlider {
+        display: none;
+        width: 100%;
+        margin: 0px;
+        border-radius: 0px;
+    }
+
+    input[type=range].BrightnessSlider::-webkit-slider-runnable-track {
+        border-radius: 0px;
+    }
+    
+    .Canvas{
+        display: block;
+        top: 60px;
+        left: calc(50% - var(--Grid-Size) / 2);
+    }
 }

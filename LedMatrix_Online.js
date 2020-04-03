@@ -6,6 +6,13 @@ var GridStandardColor='#000000';
 var MaxPictures=30;
 var Pictures=[];
 var PicDelay=100;
+var Borders=10; //Border thicknes in px
+
+var Mobile=false;
+var MobileBorders=5;
+var MobileGridLineWidth=3
+var MobileGridWidth=0.92;
+
 
 var OccuredErrors=0;
 var MaxError=2;
@@ -19,17 +26,40 @@ var RgbaToRgbBackground=[0,0,0];
 var funqueue = [];
 
 function setup() {
-    canvas=createCanvas(windowWidth, windowHeight);
+    if(windowHeight>windowWidth){
+        canvas=createCanvas(windowWidth*MobileGridWidth+Borders*2, windowWidth*MobileGridWidth+Borders*2);     
+        Mobile=true;
+        Borders=MobileBorders;
+        GridLineWidth=MobileGridLineWidth;
+        document.documentElement.style.setProperty('--Grid-Size', (windowWidth*MobileGridWidth+Borders*4)+"px");
+        ColorBar=['#000000','#4dffa0','#4d98ff','#7d4dff','#ff233d','#ff984d','#fff84d','#ff8000','#00ff93','#00ceff','#ff4dea','#ff4d62','#000000','#ffffff'];
+        for(var i=1; i<=13; i++){
+            document.getElementById("MobileColorTab"+i).style.backgroundColor=ColorBar[i];
+        }
+        colorPicker= new window.iro.ColorPicker('#mobilepicker', {
+        width: 100,
+        color: "#ffffff"
+    });
+    }else{
+        canvas=createCanvas(windowHeight*GridHeight+Borders*2, windowHeight*GridHeight+Borders*2);     
+        document.documentElement.style.setProperty('--Grid-Size', windowHeight*GridHeight+"px");
+        ColorBar=['#000000','#4dffa0','#4d98ff','#7d4dff','#ff4dea','#ff4d62','#ff984d','#fff84d','#000000','#ffffff'];
+        for(var i=1; i<=9; i++){
+            document.getElementById("ColorTab"+i).style.backgroundColor=ColorBar[i];
+        }
+        colorPicker= new window.iro.ColorPicker('#picker', {
+        width: 100,
+        color: "#ffffff"
+    });
+    }
+
     canvas.parent("Grid");
-    document.documentElement.style.setProperty('--Grid-Size', windowHeight*GridHeight+"px");
+
     MatrixColors=Create2DArray(GridSize,GridSize);
     for(var y=0; y<GridSize; y++){
         for( var x=0; x<GridSize; x++){
             MatrixColors[x][y]=GridStandardColor;
         }
-    }
-    for(var i=1; i<=9; i++){
-    document.getElementById("ColorTab"+i).style.backgroundColor=ColorBar[i];
     }
 }
 
@@ -40,9 +70,9 @@ function draw() {
 }
 
 function DrawGrid(){
-    var CellSize=(windowHeight*GridHeight)/GridSize;
-    var SX=width/2-(height*GridHeight)/2;
-    var SY=height/2-(height*GridHeight)/2;
+    var CellSize=(height-Borders*2)/GridSize;    
+    var SX=width/2-(height)/2+Borders;
+    var SY=height/2-(height)/2+Borders;
     strokeWeight(GridLineWidth);
     stroke(GridLineColor);
     noFill();
@@ -51,15 +81,15 @@ function DrawGrid(){
             rect(SX+CellSize*x,SY+CellSize*y,CellSize,CellSize);
         }
     }
-    strokeWeight(15);
+    strokeWeight(Borders);
     strokeJoin(ROUND);
-    rect(SX-7,SY-7, CellSize*GridSize+15, CellSize*GridSize+15);
+    rect(SX-Borders/2,SY-Borders/2, CellSize*GridSize+Borders, CellSize*GridSize+Borders);
 }
 
 function DrawTiles(){
-    var CellSize=(windowHeight*GridHeight)/GridSize;
-    var SX=width/2-(height*GridHeight)/2;
-    var SY=height/2-(height*GridHeight)/2;
+    var CellSize=(height-Borders*2)/GridSize; 
+    var SX=width/2-(height)/2+Borders;
+    var SY=height/2-(height)/2+Borders;
     for(var y=0; y<GridSize; y++){
         for(var x=0; x<GridSize; x++){
             noStroke();
@@ -78,9 +108,9 @@ function Create2DArray(rows,columns) {
 }
 
 function mousePressed(){
-    if(mouseX>=width/2-(GridHeight*height)/2 && mouseX<=width/2+(GridHeight*height)/2 && mouseY>=height/2-(GridHeight*height)/2 && mouseY<=height/2+(GridHeight*height)/2){
-        if(!ColorPickerActive){
-            var TileNumber=GetTileNumber(mouseX, mouseY);
+    if(!ColorPickerActive){
+        var TileNumber=GetTileNumber(mouseX, mouseY);
+        if(TileNumber[0]!=-1&&TileNumber[1]!=-1){
             switch(SelectedTool){
                 case 0:
                     DrawPixel(TileNumber[0],TileNumber[1],SelectedColor, true);
@@ -98,15 +128,16 @@ function mousePressed(){
                     LineStart[1]=TileNumber[1];
                     SetBuffer();
                     break;
+
             }
         }
     }
 }
 
 function mouseDragged(){
-    if(mouseX>=width/2-(GridHeight*height)/2 && mouseX<=width/2+(GridHeight*height)/2 && mouseY>=height/2-(GridHeight*height)/2 && mouseY<=height/2+(GridHeight*height)/2){
-        if(!ColorPickerActive){
-            var TileNumber=GetTileNumber(mouseX, mouseY);
+    if(!ColorPickerActive){
+        var TileNumber=GetTileNumber(mouseX, mouseY);
+        if(TileNumber[0]!=-1&&TileNumber[1]!=-1){
             switch(SelectedTool){
                 case 0:
                     DrawPixel(TileNumber[0],TileNumber[1],SelectedColor, true);
@@ -121,10 +152,10 @@ function mouseDragged(){
         }
     }
 }
-
 function mouseReleased(){
-    if(mouseX>=width/2-(GridHeight*height)/2 && mouseX<=width/2+(GridHeight*height)/2 && mouseY>=height/2-(GridHeight*height)/2 && mouseY<=height/2+(GridHeight*height)/2){
-        if(!ColorPickerActive){
+    if(!ColorPickerActive){
+        var TileNumber=GetTileNumber(mouseX, mouseY);
+        if(TileNumber[0]!=-1&&TileNumber[1]!=-1){
             switch(SelectedTool){
                 case 2:
                     SetMatrixFromBuffer(MatrixBuffer);
@@ -144,27 +175,25 @@ function mouseReleased(){
 }
 
 function GetTileNumber(MX, MY){
-    if(MX>=width/2-(GridHeight*height)/2 && MX<=width/2+(GridHeight*height)/2 && MY>=height/2-(GridHeight*height)/2 && MY<=height/2+(GridHeight*height)/2){
-        var CellSize=(windowHeight*GridHeight)/GridSize;
-        var SX=width/2-(height*GridHeight)/2;
-        var SY=height/2-(height*GridHeight)/2;
-        var x;
-        var y;
-        for(var i=0; i<GridSize; i++){
-            if(MX<SX+CellSize*(i+1)){
-                x=i;
-                break;
-            }
+    var CellSize=(height-Borders*2)/GridSize; 
+    var SX=width/2-(height)/2+Borders;
+    var SY=height/2-(height)/2+Borders;
+    var x=-1;
+    var y=-1;
+    for(var i=0; i<GridSize; i++){
+        if(MX<SX+CellSize*(i+1)){
+            x=i;
+            break;
         }
-
-        for(var i=0; i<GridSize; i++){
-            if(MY<SY+CellSize*(i+1)){
-                y=i;
-                break;
-            }
-        }
-        return [x,y];
     }
+
+    for(var i=0; i<GridSize; i++){
+        if(MY<SY+CellSize*(i+1)){
+            y=i;
+            break;
+        }
+    }
+    return [x,y];
 }
 
 function DrawPixel(PixelX,PixelY,PixelColor,SendBle){
@@ -547,46 +576,74 @@ function SetMatrixFromBuffer(Buffer){
 //////////////////Color Bar/////////////////////////
 var ColorPickerActive=false;
 var Opened=false;
-var colorPicker = new window.iro.ColorPicker('#picker', {
-    width: 100,
-    color: "#ffffff"
-});
-var ColorBar= ['#000000','#4dffa0','#4d98ff','#7d4dff','#ff4dea','#ff4d62','#ff984d','#fff84d','#000000','#ffffff'];
+var colorPicker;
+var ColorBar;
 
 function onColorChange(color, changes) {
-    document.getElementById("CPC").style.color=color.hexString;
+    if(Mobile){
+    document.getElementById("MCPC").style.color=color.hexString;
+    }else{
+        document.getElementById("CPC").style.color=color.hexString;
     document.getElementById("ColorTab0").style.color=color.hexString;
+    }
     ColorBar[0]=color.hexString;
     SelectedColor=ColorBar[0];
 }
 
 function OpenColorPicker(){
-    for(var i=1; i<=9; i++){
-        document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+    if(Mobile){
+        for(var i=1; i<=13; i++){
+            document.getElementById("MobileColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+        }
+    }else{
+        for(var i=1; i<=9; i++){
+            document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+        }
     }
     colorPicker.on('color:change', onColorChange);
-    document.getElementById("CPC").style.display="block";
+    document.getElementById("MCPC").style.display="block";
     ColorPickerActive=true; 
     Opened=true;
 }
 
 function SelectColor(c){
-    for(var i=1; i<=9; i++){
-        document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+    if(Mobile){
+        for(var i=1; i<=13; i++){
+            document.getElementById("MobileColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+        }
+    }else{
+        for(var i=1; i<=9; i++){
+            document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";
+        }
     }
     console.log(c);
     SelectedColor=ColorBar[c];
-    document.getElementById("ColorTab"+c).style["boxShadow"] = "0 0 10px #fff";
+    if(Mobile){
+        document.getElementById("MobileColorTab"+c).style["boxShadow"] = "0 0 10px #fff";
+    }else{
+        document.getElementById("ColorTab"+c).style["boxShadow"] = "0 0 10px #fff";
+    }
 }
 
 document.addEventListener('click', function(e) {
     e = e || window.event;
     var target = e.target || e.srcElement;
-    if(target.parentElement.parentElement.className!="ColorPicker" && target.parentElement.parentElement.className!="ColorBar" && !Opened){
-        document.getElementById("CPC").style.display="none";
+    if(target.tagName=="BODY" && !Opened){
+        if(Mobile){
+        document.getElementById("MCPC").style.display="none";
+        }else{
+            document.getElementById("CPC").style.display="none";
+        }
         ColorPickerActive=false;
         colorPicker.off('color:change', onColorChange);
-
+    } else if(target.parentElement.parentElement.className!="ColorPicker" && target.parentElement.parentElement.className!="ColorBar" && !Opened){
+        if(Mobile){
+        document.getElementById("MCPC").style.display="none";
+        }else{
+            document.getElementById("CPC").style.display="none";
+        }
+        ColorPickerActive=false;
+        colorPicker.off('color:change', onColorChange);
     }
     if(Opened){
         Opened=false;
@@ -754,4 +811,29 @@ function convertFromHex(hex) {
     for (var i = 0; i < hex.length; i += 2)
         str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     return str;
+}
+
+
+//////////////////Mobile///////////////////////////
+function OpenBleMenu(){
+    if(document.getElementById("MBB").getElementsByClassName("MobileButtons")[0].style.display!="block"){
+        document.getElementById("MBB").style.borderBottomLeftRadius="0px";
+        document.getElementById("MBB").style.borderBottomRightRadius="0px";
+        document.getElementById("MBB").getElementsByClassName("MobileButtons")[0].style.display="block";
+        document.getElementById("MBB").getElementsByClassName("MobileButtons")[1].style.display="block";
+        document.getElementById("MBB").getElementsByClassName("MobileButtons")[2].style.display="block";
+        document.getElementById("MBB").getElementsByClassName("BrightnessSlider")[0].style.display="block";
+    }else{
+        CloseBleMenu();
+    }
+}
+
+function CloseBleMenu(){
+    document.getElementById("MBB").style.borderBottomLeftRadius="20px";
+    document.getElementById("MBB").style.borderBottomRightRadius="20px";
+    document.getElementById("MBB").getElementsByClassName("MobileButtons")[0].style.display="none";
+    document.getElementById("MBB").getElementsByClassName("MobileButtons")[1].style.display="none";
+    document.getElementById("MBB").getElementsByClassName("MobileButtons")[2].style.display="none";
+    document.getElementById("Brightness").style.display="none";
+    document.getElementById("MBB").getElementsByClassName("BrightnessSlider")[0].style.display="none";
 }

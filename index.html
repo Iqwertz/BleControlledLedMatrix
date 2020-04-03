@@ -1,14 +1,15 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
         <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
         <script language="javascript" type="text/javascript" src="libraries/iro.js"></script>
         <script language="javascript" type="text/javascript" src="LedMatrix_Online.js"></script>
 
         <script src="https://kit.fontawesome.com/096ef5e38d.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="toolmenu.css">
+                <link rel="stylesheet" href="toolmenu.css">
         <link rel="stylesheet" href="ColorBar.css">
+        <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
@@ -22,12 +23,12 @@
                 <div onclick="SetTool(2);" style="--animation-offset:2" class="SubMenu"><i class="far fa-circle"></i></div>
                 <div onclick="SetTool(3);"  style="--animation-offset:2.5" class="SubMenu"><i class="fas fa-vector-square"></i></div>
             </div>
-                    <div onclick="ClearDisp();" class="ToolClear"><i class="fas fa-eraser"></i></div>
+            <div onclick="ClearDisp();" class="ToolClear"><i class="fas fa-eraser"></i></div>
         </div>
-        <div id="Grid" style="margin-top: -30px;"></div>
+        <div id="Grid" class="Canvas"></div>
         <div class="ColorBar">
             <div id="CPC" class="ColorPickerContainer">
-                <div id="picker" class="ColorPicker"></div>
+                <div id="picker" class="ColorPicker"></div> 
                 <div class="pointer"></div>
             </div>
             <div onclick="OpenColorPicker();" id="ColorTab0" class="ColorTap"></div>
@@ -42,11 +43,43 @@
             <div onclick="SelectColor(9);" id="ColorTab9" class="ColorTap"></div>
         </div>
 
+        <div class="MobileColorBar">
+            <div id="MCPC" class="MobileColorPickerContainer">
+                <div id="mobilepicker" class="ColorPicker"></div> 
+                <div class="pointer"></div>
+            </div>
+            <div onclick="OpenColorPicker();" id="ColorTab0" class="ColorTap"></div>
+            <div onclick="SelectColor(1);" id="MobileColorTab1" class="ColorTap"></div>
+            <div onclick="SelectColor(2);" id="MobileColorTab2" class="ColorTap"></div>
+            <div onclick="SelectColor(3);" id="MobileColorTab3" class="ColorTap"></div>
+            <div onclick="SelectColor(4);" id="MobileColorTab4" class="ColorTap"></div>
+            <div onclick="SelectColor(5);" id="MobileColorTab5" class="ColorTap"></div>
+            <div onclick="SelectColor(6);" id="MobileColorTab6" class="ColorTap"></div>
+        </div>
+        <div id="2" class="MobileColorBar">
+            <div onclick="SelectColor(7);" id="MobileColorTab7" class="ColorTap"></div>
+            <div onclick="SelectColor(8);" id="MobileColorTab8" class="ColorTap"></div>
+            <div onclick="SelectColor(9);" id="MobileColorTab9" class="ColorTap"></div>
+            <div onclick="SelectColor(10);" id="MobileColorTab10" class="ColorTap"></div>
+            <div onclick="SelectColor(11);" id="MobileColorTab11" class="ColorTap"></div>
+            <div onclick="SelectColor(12);" id="MobileColorTab12" class="ColorTap"></div>
+            <div onclick="SelectColor(13);" id="MobileColorTab13" class="ColorTap"></div>
+        </div>
+
         <div class="BleButtonsContainer">
             <button onclick="onStartButtonClick();" class="BleButtons" id="connect">Connect</button>
             <button onclick="BleMatrixUpdate();" class="BleButtons" id="update">Update</button>
             <button onclick="onStopButtonClick();" class="BleButtons" id="disconnect">Disconnect</button>
-            
+
+            <input type="range" min="0" max="100" value="30" id="Brightness" onchange="SetBrightness(this.value)" class="BrightnessSlider BleButtons"/>
+        </div>
+
+        <div onclick="OpenBleMenu();" id="MBB" class="MobileBleButtons">
+            <i class="fab fa-bluetooth-b"></i>
+            <button onclick="onStartButtonClick();" class="MobileButtons" id="connect">Connect</button>
+            <button onclick="BleMatrixUpdate();" class="MobileButtons" id="update">Update</button>
+            <button onclick="onStopButtonClick();" class="MobileButtons" id="disconnect">Disconnect</button>
+
             <input type="range" min="0" max="100" value="30" id="Brightness" onchange="SetBrightness(this.value)" class="BrightnessSlider BleButtons"/>
         </div>
     </body>
