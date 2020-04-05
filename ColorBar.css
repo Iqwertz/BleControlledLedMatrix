@@ -80,23 +80,38 @@
         display: flex;
         box-shadow: 5px 5px 10px #000;
     }
-    
+
     .MobileColorPickerContainer{
-    display: none;
-    z-index: 2;
-    position: absolute;
-    bottom: 70px;
-    left: 2px;
-    width: 120px;
-    height: 170px;
-    background-color: #212121; 
-    border-radius: 15px;
-    border: 2px solid;
-    box-shadow: 0px 0px 10px;
-}
-    
+        display: none;
+        z-index: 2;
+        position: absolute;
+        bottom: 70px;
+        left: 2px;
+        width: 120px;
+        height: 170px;
+        background-color: #212121; 
+        border-radius: 15px;
+        border: 2px solid;
+        box-shadow: 0px 0px 10px;
+    }
+
     .MobileColorPickerContainer > .pointer{
         left: 5px;
         width: 35px;
     }
-}
+
+    #connect{
+        background: rgb(116,255,251);
+        background: linear-gradient(45deg, rgb(89, 28, 255) 0%, rgb(255, 23, 23) 100%) !important;
+    }
+
+    #update{
+        background: rgb(116,255,251);
+        background: linear-gradient(135deg, rgb(89, 28, 255) 0%, rgb(255, 23, 23) 100%) !important;
+    }
+    
+    #disconnect{
+        background: rgb(116,255,251);
+        background: linear-gradient(45deg, rgb(89, 28, 255) 0%, rgb(255, 23, 23) 100%) !important;
+    }
+
