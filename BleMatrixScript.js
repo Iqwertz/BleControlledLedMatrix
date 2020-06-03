@@ -131,6 +131,7 @@ function DrawPixel(PixelX,PixelY,PixelColor,SendBle){                           
 function mousePressed(){                                                            //called when mouse pressed
     if(!ColorPickerActive){                                                         //disable drawing when color picker is active
         var TileNumber=GetTileNumber(mouseX, mouseY);                               //gets the x and y position on the Matrix array scale
+        console.log(TileNumber);
         if(TileNumber[0]!=-1&&TileNumber[1]!=-1){                                   //check if the ckick was on the canvas
             switch(SelectedTool){                                                   //check which tool is curently selected
                 case 0:                                                             //Pen tool
@@ -201,6 +202,9 @@ function GetTileNumber(MX, MY){                  //returns the Grid x and Grid y
     var SY=height/2-(height)/2+Borders;          //top cordinate of starting point
     var x=-1;                                    //calculated x value (when no value found -1 is returned)
     var y=-1;                                    //calculated y value (when no value found -1 is returned)
+    if(MX<SX || MY<SY){                          //Detect if Mouse Click was out of Canvas
+        return [x,y];
+    }
     for(var i=0; i<GridSize; i++){               //Loops threw every x cordinate of the Grid and Check when Mouse X is in bounds
         if(MX<SX+CellSize*(i+1)){ 
             x=i; 
@@ -512,15 +516,17 @@ function OpenColorPicker(){                                                     
         for(var i=1; i<=13; i++){
             document.getElementById("MobileColorTab"+i).style["boxShadow"] = "0 0 0px #fff";    //Delete all mobile "selected" shadows
         }
+        document.getElementById("MCPC").style.display="block";                                      //display Mobile Color Picker
     }else{
         for(var i=1; i<=9; i++){
             document.getElementById("ColorTab"+i).style["boxShadow"] = "0 0 0px #fff";          //Delete all "selected" shadows
         }
+        document.getElementById("CPC").style.display="block";                                      //display Mobile Color Picker
     }
     colorPicker.on('color:change', onColorChange);                                              //turn on Color Picker
-    document.getElementById("MCPC").style.display="block";                                      //display Color Picker
     ColorPickerActive=true;                                                                     //Set COlor Picker State
     Opened=true;                                                                                //Set Color Picker as opened (this var is needed to avoid instant closing after opening)
+    console.log("Open");
 }
 
 /////Select Color/////
@@ -550,6 +556,7 @@ document.addEventListener('click', function(e) {                                
             document.getElementById("MCPC").style.display="none";
         }else{
             document.getElementById("CPC").style.display="none";
+            console.log("Body None");
         }
         ColorPickerActive=false;
         colorPicker.off('color:change', onColorChange);
@@ -558,6 +565,7 @@ document.addEventListener('click', function(e) {                                
             document.getElementById("MCPC").style.display="none";
         }else{
             document.getElementById("CPC").style.display="none";
+            console.log("Normal None");
         }
         ColorPickerActive=false;
         colorPicker.off('color:change', onColorChange);
